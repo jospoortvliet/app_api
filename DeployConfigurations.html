@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deployment configurations &mdash; AppAPI latest documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/styles.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/dark.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/light.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=c6e86fd7"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script src="_static/tabs.js?v=3ee01567"></script>
+        <script src="_static/js/script.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Creation of Deploy Daemon" href="CreationOfDeployDaemon.html" />
+    <link rel="prev" title="Installation" href="Installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AppAPI
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Deployment configurations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker-deploy-daemon">Docker Deploy Daemon</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nc-docker-on-the-same-host">NC &amp; Docker on the Same-Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-on-a-remote-host">Docker on a remote host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nc-exapps-in-the-same-docker">NC &amp; ExApps in the same Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nc-in-docker-and-exapps-in-child-docker-docker-in-docker">NC in Docker and ExApps in child Docker (Docker in Docker)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nextcloud-in-docker-aio-all-in-one">Nextcloud in Docker AIO (all-in-one)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CreationOfDeployDaemon.html">Creation of Deploy Daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ManagingExternalApplications.html">Managing External Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tech_details/index.html">Technical details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DevSetup.html">Setting up dev environment</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AppAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Deployment configurations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/DeployConfigurations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="deployment-configurations">
+<span id="deploy-configs"></span><h1>Deployment configurations<a class="headerlink" href="#deployment-configurations" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt>Currently, only one kind of application deployment is supported:</dt><dd><ul class="simple">
+<li><p><strong>Docker Deploy Daemon</strong></p></li>
+</ul>
+</dd>
+</dl>
+<section id="docker-deploy-daemon">
+<h2>Docker Deploy Daemon<a class="headerlink" href="#docker-deploy-daemon" title="Link to this heading"></a></h2>
+<p>Provides the deployment of applications as Docker containers.</p>
+<p>There are several Docker Daemon Deploy configurations:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Nextcloud and Docker on the <strong>same host</strong> (via socket or port)</p></li>
+<li><p>Nextcloud on the host and Docker on a <strong>remote</strong> host (via port)</p></li>
+<li><p>Nextcloud and <strong>ExApps</strong> in the <strong>same Docker</strong> (via socket or port)</p></li>
+<li><p>Nextcloud in a Docker and <strong>ExApps</strong> in the <strong>child Docker</strong> (DiD) (via socket)</p></li>
+<li><p>Nextcloud in AIO Docker and <strong>ExApps</strong> in the <strong>same Docker</strong> (via socket proxy)</p></li>
+</ul>
+</div></blockquote>
+<p>For each configuration that uses a socket, please ensure that the Nextcloud webserver user has sufficient permissions to access it.
+In the case of remote access to the Daemon, make certain that it’s configured with <strong>ssl_key</strong>, <strong>ssl_cert</strong>, and <strong>ca.cert</strong>, and that the latter is imported into Nextcloud.</p>
+<section id="nc-docker-on-the-same-host">
+<h3>NC &amp; Docker on the Same-Host<a class="headerlink" href="#nc-docker-on-the-same-host" title="Link to this heading"></a></h3>
+<p>The simplest configuration is when Nextcloud is installed on the host and Docker is on the same host and applications are deployed to it.</p>
+<div class="mermaid">
+            stateDiagram-v2
+        classDef docker fill: #1f97ee, color: transparent, font-size: 34px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef nextcloud fill: #006aa3, color: transparent, font-size: 34px, stroke: #045987, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/nextcloud.svg) no-repeat center center / contain
+        classDef python fill: #1e415f, color: white, stroke: #364c53, stroke-width: 1px
+
+        Host
+
+        state Host {
+                Nextcloud --&gt; Daemon : /var/run/docker.sock
+                Daemon --&gt; Containers
+
+                state Containers {
+                        ExApp1
+                        --
+                        ExApp2
+                        --
+                        ExApp3
+                }
+        }
+
+        class Nextcloud nextcloud
+        class Daemon docker
+        class ExApp1 python
+        class ExApp2 python
+        class ExApp3 python
+        </div><p>Suggested way to communicate with Docker: via <code class="docutils literal notranslate"><span class="pre">socket</span></code>.</p>
+</section>
+<section id="docker-on-a-remote-host">
+<h3>Docker on a remote host<a class="headerlink" href="#docker-on-a-remote-host" title="Link to this heading"></a></h3>
+<p>Distributed configuration occurs when Nextcloud is installed on one host and Docker is located on a remote host, resulting in the deployment of applications on the remote host.</p>
+<p>Benefit: no performance impact on Nextcloud host.</p>
+<div class="mermaid">
+            stateDiagram-v2
+        classDef docker fill: #1f97ee, color: transparent, font-size: 34px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef nextcloud fill: #006aa3, color: transparent, font-size: 34px, stroke: #045987, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/nextcloud.svg) no-repeat center center / contain
+        classDef python fill: #1e415f, color: white, stroke: #364c53, stroke-width: 1px
+
+        Direction LR
+
+                Host1 --&gt; Host2 : by port
+
+        state Host1 {
+                Nextcloud
+        }
+
+        state Host2 {
+                Daemon --&gt; Containers
+
+                state Containers {
+                        ExApp1
+                        --
+                        ExApp2
+                        --
+                        ExApp3
+                }
+        }
+
+        class Nextcloud nextcloud
+        class Daemon docker
+        class ExApp1 python
+        class ExApp2 python
+        class ExApp3 python
+        </div><p>In this case, the AppAPI (Nextcloud) uses <code class="docutils literal notranslate"><span class="pre">port</span></code> to interact with Docker.</p>
+</section>
+<section id="nc-exapps-in-the-same-docker">
+<h3>NC &amp; ExApps in the same Docker<a class="headerlink" href="#nc-exapps-in-the-same-docker" title="Link to this heading"></a></h3>
+<p>Applications are deployed in the same docker where Nextcloud resides.</p>
+<div class="mermaid">
+            stateDiagram-v2
+        classDef docker fill: #1f97ee, color: transparent, font-size: 34px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef nextcloud fill: #006aa3, color: transparent, font-size: 34px, stroke: #045987, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/nextcloud.svg) no-repeat center center / contain
+        classDef python fill: #1e415f, color: white, stroke: #364c53, stroke-width: 1px
+
+        Host
+
+        state Host {
+                Daemon --&gt; Containers
+
+                state Containers {
+                        [*] --&gt; Nextcloud : /var/run/docker.sock
+                        --
+                        ExApp1
+                        --
+                        ExApp2
+                }
+        }
+
+        class Nextcloud nextcloud
+        class Daemon docker
+        class ExApp1 python
+        class ExApp2 python
+        class ExApp3 python
+        </div><p>Suggested way to communicate with Docker: via <code class="docutils literal notranslate"><span class="pre">socket</span></code>.</p>
+</section>
+<section id="nc-in-docker-and-exapps-in-child-docker-docker-in-docker">
+<h3>NC in Docker and ExApps in child Docker (Docker in Docker)<a class="headerlink" href="#nc-in-docker-and-exapps-in-child-docker-docker-in-docker" title="Link to this heading"></a></h3>
+<p>In this scenario, Nextcloud is installed within a container, and a separate Daemon (Docker) is also contained within the Nextcloud container.</p>
+<div class="mermaid">
+            stateDiagram-v2
+        classDef docker fill: #1f97ee, color: transparent, font-size: 34px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef docker2 fill: #1f97ee, color: transparent, font-size: 20px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef nextcloud fill: #006aa3, color: white, stroke: #045987, stroke-width: 1px
+        classDef python fill: #1e415f, color: white, stroke: #364c53, stroke-width: 1px
+
+        Host
+
+        state Host {
+                Daemon --&gt; Containers
+
+                state Containers {
+                        [*] --&gt; Nextcloud : /var/run/docker.sock
+
+                        state Nextcloud {
+                                Daemon2 --&gt; Containers2
+
+                                state Containers2 {
+                                        ExApp1
+                                        --
+                                        ExApp2
+                                        --
+                                        ExApp3
+                                }
+                        }
+                }
+        }
+
+        class Nextcloud nextcloud
+        class Daemon docker
+        class Daemon2 docker2
+        class ExApp1 python
+        class ExApp2 python
+        class ExApp3 python
+        </div><p>In this case, the AppAPI (Nextcloud) uses <code class="docutils literal notranslate"><span class="pre">socket</span></code> to interact with Docker.</p>
+</section>
+<section id="nextcloud-in-docker-aio-all-in-one">
+<h3>Nextcloud in Docker AIO (all-in-one)<a class="headerlink" href="#nextcloud-in-docker-aio-all-in-one" title="Link to this heading"></a></h3>
+<p>In case of AppAPI is in Docker AIO setup (installed in Nextcloud container).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AIO Docker Socket Proxy container must be enabled.</p>
+</div>
+<div class="mermaid">
+            stateDiagram-v2
+        classDef docker fill: #1f97ee, color: transparent, font-size: 34px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef docker2 fill: #1f97ee, color: transparent, font-size: 20px, stroke: #364c53, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/docker.png) no-repeat center center / contain
+        classDef nextcloud fill: #006aa3, color: transparent, font-size: 34px, stroke: #045987, stroke-width: 1px, background: url(https://raw.githubusercontent.com/cloud-py-api/app_api/main/docs/img/nextcloud.svg) no-repeat center center / contain
+        classDef python fill: #1e415f, color: white, stroke: #364c53, stroke-width: 1px
+
+        Host
+
+        state Host {
+                Daemon --&gt; Containers
+
+                state Containers {
+                        [*] --&gt; NextcloudAIOMasterContainer : /var/run/docker.sock
+                        [*] --&gt; DockerSocketProxy : /var/run/docker.sock
+                        NextcloudAIOMasterContainer --&gt; Nextcloud
+                        AppAPI --&gt; Nextcloud : installed in
+                        Nextcloud --&gt; DockerSocketProxy
+                        DockerSocketProxy --&gt; ExApp1
+                        DockerSocketProxy --&gt; ExApp2
+                        DockerSocketProxy --&gt; ExApp3
+                }
+        }
+
+        class Nextcloud nextcloud
+        class Daemon docker
+        class Daemon2 docker2
+        class ExApp1 python
+        class ExApp2 python
+        class ExApp3 python
+        </div><p>AppAPI will automatically create default default DaemonConfig to use AIO Docker Socket Proxy as orchestrator to create ExApp containers.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CreationOfDeployDaemon.html" class="btn btn-neutral float-right" title="Creation of Deploy Daemon" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Nextcloud GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

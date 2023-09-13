@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creation of Deploy Daemon &mdash; AppAPI latest documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/styles.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/dark.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/light.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=c6e86fd7"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script src="_static/tabs.js?v=3ee01567"></script>
+        <script src="_static/js/script.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Managing External Applications" href="ManagingExternalApplications.html" />
+    <link rel="prev" title="Deployment configurations" href="DeployConfigurations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AppAPI
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeployConfigurations.html">Deployment configurations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Creation of Deploy Daemon</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#occ-cli">OCC CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#register">Register</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deployconfig">DeployConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#unregister">Unregister</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-registered-daemons">List registered daemons</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nextcloud-aio">Nextcloud AIO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ManagingExternalApplications.html">Managing External Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tech_details/index.html">Technical details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DevSetup.html">Setting up dev environment</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AppAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Creation of Deploy Daemon</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CreationOfDeployDaemon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="creation-of-deploy-daemon">
+<span id="create-deploy-daemon"></span><h1>Creation of Deploy Daemon<a class="headerlink" href="#creation-of-deploy-daemon" title="Link to this heading"></a></h1>
+<p>The Deploy Daemon (DaemonConfig) is used to orchestrate the deployment of ExApps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently only Docker (<code class="docutils literal notranslate"><span class="pre">accepts-deploy-id:</span> <span class="pre">docker-install</span></code>) is supported as a Deploy Daemon.</p>
+</div>
+<section id="occ-cli">
+<h2>OCC CLI<a class="headerlink" href="#occ-cli" title="Link to this heading"></a></h2>
+<p>There are a few commands to manage Deploy Daemons:</p>
+<ol class="arabic simple">
+<li><p>Register <code class="docutils literal notranslate"><span class="pre">occ</span> <span class="pre">app_api:daemon:register</span></code></p></li>
+<li><p>Unregister <code class="docutils literal notranslate"><span class="pre">occ</span> <span class="pre">app_api:daemon:unregister</span></code></p></li>
+<li><p>List registered daemons <code class="docutils literal notranslate"><span class="pre">occ</span> <span class="pre">app_api:daemon:list</span></code></p></li>
+</ol>
+<section id="register">
+<h3>Register<a class="headerlink" href="#register" title="Link to this heading"></a></h3>
+<p>Register Deploy Daemon (DaemonConfig).</p>
+<p>Command: <code class="docutils literal notranslate"><span class="pre">app_api:daemon:register</span> <span class="pre">[--net</span> <span class="pre">NET]</span> <span class="pre">[--hostname</span> <span class="pre">HOSTNAME]</span> <span class="pre">[--ssl_key</span> <span class="pre">SSL_KEY]</span> <span class="pre">[--ssl_key_password</span> <span class="pre">SSL_KEY_PASSWORD]</span> <span class="pre">[--ssl_cert</span> <span class="pre">SSL_CERT]</span> <span class="pre">[--ssl_cert_password</span> <span class="pre">SSL_CERT_PASSWORD]</span> <span class="pre">[--gpu</span> <span class="pre">GPU]</span> <span class="pre">[--]</span> <span class="pre">&lt;name&gt;</span> <span class="pre">&lt;display-name&gt;</span> <span class="pre">&lt;accepts-deploy-id&gt;</span> <span class="pre">&lt;protocol&gt;</span> <span class="pre">&lt;host&gt;</span> <span class="pre">&lt;nextcloud_url&gt;</span></code></p>
+<section id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Link to this heading"></a></h4>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> - unique name of the daemon (e.g. <code class="docutils literal notranslate"><span class="pre">docker_local_sock</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">display-name</span></code> - name of the daemon (e.g. <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">Local</span> <span class="pre">Docker</span></code>, will be displayed in the UI)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">accepts-deploy-id</span></code> - type of deployment (<code class="docutils literal notranslate"><span class="pre">docker-install</span></code> or <code class="docutils literal notranslate"><span class="pre">manual-install</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protocol</span></code> - protocol used to connect to the daemon (<code class="docutils literal notranslate"><span class="pre">unix-socket</span></code>, <code class="docutils literal notranslate"><span class="pre">http</span></code> or <code class="docutils literal notranslate"><span class="pre">https</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code> - host of the daemon (e.g. <code class="docutils literal notranslate"><span class="pre">/var/run/docker.sock</span></code> for <code class="docutils literal notranslate"><span class="pre">unix-socket</span></code> protocol or <code class="docutils literal notranslate"><span class="pre">host:port</span></code> for <code class="docutils literal notranslate"><span class="pre">http(s)</span></code> protocol)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextcloud_url</span></code> - Nextcloud URL, Daemon config required option (e.g. <code class="docutils literal notranslate"><span class="pre">https://nextcloud.local</span></code>)</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="options">
+<h4>Options<a class="headerlink" href="#options" title="Link to this heading"></a></h4>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--net</span> <span class="pre">[network-name]</span></code>  - <code class="docutils literal notranslate"><span class="pre">[required]</span></code> network name to bind docker container to (default: <code class="docutils literal notranslate"><span class="pre">host</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--hostname</span> <span class="pre">HOST</span></code> - <code class="docutils literal notranslate"><span class="pre">[required]</span></code> host to expose daemon to (defaults to ExApp appid)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ssl_key</span> <span class="pre">SSL_KEY</span></code> - <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> path to SSL key file (local absolute path)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ssl_password</span> <span class="pre">SSL_PASSWORD</span></code> - <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> SSL key password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ssl_cert</span> <span class="pre">SSL_CERT</span></code> - <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> path to SSL cert file (local absolute path)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ssl_cert_password</span> <span class="pre">SSL_CERT_PASSWORD</span></code> - <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> SSL cert password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--gpu</span> <span class="pre">GPU</span></code> - <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> GPU device to expose to the daemon (e.g. <code class="docutils literal notranslate"><span class="pre">/dev/dri</span></code>)</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="deployconfig">
+<h4>DeployConfig<a class="headerlink" href="#deployconfig" title="Link to this heading"></a></h4>
+<p>DeployConfig is a set of additional options in Daemon config, which are used in deployment algorithms to configure
+ExApp container.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;net&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nextcloud&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;nextcloud_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://nextcloud.local&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ssl_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/ssl/key.pem&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ssl_key_password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ssl_key_password&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ssl_cert&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/ssl/cert.pem&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ssl_cert_password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ssl_cert_password&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;gpus&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/dev/dri&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="deployconfig-options">
+<h5>DeployConfig options<a class="headerlink" href="#deployconfig-options" title="Link to this heading"></a></h5>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">net</span></code> <strong>[required]</strong> - network name to bind docker container to (default: <code class="docutils literal notranslate"><span class="pre">host</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code> <em>[optional]</em> - in case Docker is on remote host, this should be a hostname of remote machine</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nextcloud_url</span></code> <strong>[required]</strong> - Nextcloud URL (e.g. <code class="docutils literal notranslate"><span class="pre">https://nextcloud.local</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_key</span></code> <em>[optional]</em> - path to SSL key file (local absolute path)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_key_password</span></code> <em>[optional]</em> - SSL key password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code> <em>[optional]</em> - path to SSL cert file (local absolute path)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ssl_cert_password</span></code> <em>[optional]</em> - SSL cert password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpus</span></code> <em>[optional]</em> - GPU device to attach to the daemon (e.g. <code class="docutils literal notranslate"><span class="pre">/dev/dri</span></code>)</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="unregister">
+<h3>Unregister<a class="headerlink" href="#unregister" title="Link to this heading"></a></h3>
+<p>Unregister Deploy Daemon (DaemonConfig).</p>
+<p>Command: <code class="docutils literal notranslate"><span class="pre">app_api:daemon:unregister</span> <span class="pre">&lt;daemon-config-name&gt;</span></code></p>
+</section>
+<section id="list-registered-daemons">
+<h3>List registered daemons<a class="headerlink" href="#list-registered-daemons" title="Link to this heading"></a></h3>
+<p>List registered Deploy Daemons (DaemonConfigs).</p>
+<p>Command: <code class="docutils literal notranslate"><span class="pre">app_api:daemon:list</span></code></p>
+</section>
+</section>
+<section id="nextcloud-aio">
+<h2>Nextcloud AIO<a class="headerlink" href="#nextcloud-aio" title="Link to this heading"></a></h2>
+<p>In case of AppAPI installed in AIO, default Deploy Daemon is registered automatically.
+It is possible to register additional Deploy Daemons with the same ways as described above.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DeployConfigurations.html" class="btn btn-neutral float-left" title="Deployment configurations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ManagingExternalApplications.html" class="btn btn-neutral float-right" title="Managing External Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Nextcloud GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
